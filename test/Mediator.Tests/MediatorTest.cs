@@ -18,15 +18,15 @@ namespace Mediator.Tests
 
             // act
             mediator.Send(new Message(
-                sender: miller,
+                from: miller,
                 content: "Hey everyone!"
             ));
             mediator.Send(new Message(
-                sender: orazio,
+                from: orazio,
                 content: "What's up Miller?"
             ));
             mediator.Send(new Message(
-                sender: fletcher,
+                from: fletcher,
                 content: "Hey Miller!"
             ));
 

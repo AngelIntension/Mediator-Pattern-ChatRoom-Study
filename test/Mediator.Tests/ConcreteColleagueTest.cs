@@ -40,7 +40,6 @@ namespace Mediator.Tests
             {
                 // assert
                 var messageWriterMock = new Mock<IMessageWriter<Message>>();
-                messageWriterMock.Setup(m => m.Write(It.IsAny<Message>()));
 
                 var sender = new Mock<IColleague>();
 

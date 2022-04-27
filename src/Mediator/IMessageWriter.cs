@@ -2,6 +2,6 @@
 {
     public interface IMessageWriter<TMessage>
     {
-        void Write(Message message);
+        void Write(TMessage message);
     }
 }

@@ -4,15 +4,15 @@ using Xunit;
 
 namespace Mediator.Tests
 {
-    public class MessageTest
+    public class ChatMessageTest
     {
-        public class Contructor : MessageTest
+        public class Constructor : ChatMessageTest
         {
             [Fact]
-            public void ShouldThrowArgumentNullExceptionGivenNullSender()
+            public void ShouldThrowArgumentNullExceptionGivenNullFrom()
             {
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new Message(null, "message"));
+                var exception = Assert.Throws<ArgumentNullException>(() => new ChatMessage(null, "some content"));
 
                 // assert
                 Assert.Equal("from", exception.ParamName);
@@ -22,10 +22,10 @@ namespace Mediator.Tests
             public void ShouldThrowArgumentNullExceptionGivenNullContent()
             {
                 // arrange
-                var sender = new Mock<IColleague>();
+                var participantMock = new Mock<IParticipant>();
 
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new Message(sender.Object, null));
+                var exception = Assert.Throws<ArgumentNullException>(() => new ChatMessage(participantMock.Object, null));
 
                 // assert
                 Assert.Equal("content", exception.ParamName);

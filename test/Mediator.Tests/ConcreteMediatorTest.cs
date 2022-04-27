@@ -6,6 +6,19 @@ namespace Mediator.Tests
 {
     public class ConcreteMediatorTest
     {
+        public class Constructor : ConcreteMediatorTest
+        {
+            [Fact]
+            public void ShouldThrowArgumentNullExceptionGivenNullColleaguesArgument()
+            {
+                // act
+                var exception = Assert.Throws<ArgumentNullException>(() => new ConcreteMediator(null));
+
+                // assert
+                Assert.Equal("colleagues", exception.ParamName);
+            }
+        }
+
         public class Send : ConcreteMediatorTest
         {
             [Fact]
@@ -15,6 +28,7 @@ namespace Mediator.Tests
                 var colleague1Mock = new Mock<IColleague>();
                 var colleague2Mock = new Mock<IColleague>();
                 var colleague3Mock = new Mock<IColleague>();
+
                 var colleagues = new IColleague[]
                 {
                     colleague1Mock.Object,
@@ -24,7 +38,7 @@ namespace Mediator.Tests
 
                 var senderMock = new Mock<IColleague>();
 
-                var message = new Message(senderMock.Object, "message from sender");
+                var message = new Message(senderMock.Object, "test message");
 
                 var sut = new ConcreteMediator(colleagues);
 
@@ -35,16 +49,6 @@ namespace Mediator.Tests
                 colleague1Mock.Verify(c => c.ReceiveMessage(message));
                 colleague2Mock.Verify(c => c.ReceiveMessage(message));
                 colleague3Mock.Verify(c => c.ReceiveMessage(message));
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentNullExceptionGivenNullColleaguesArgument()
-            {
-                // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new ConcreteMediator(null));
-
-                // assert
-                Assert.Equal("colleagues", exception.ParamName);
             }
         }
     }
