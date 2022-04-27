@@ -2,6 +2,7 @@
 {
     public interface IChatRoom
     {
-        void Send(ChatMessage chatMessage);
+        void Join(IParticipant participant);
+        void Send(ChatMessage message);
     }
 }
