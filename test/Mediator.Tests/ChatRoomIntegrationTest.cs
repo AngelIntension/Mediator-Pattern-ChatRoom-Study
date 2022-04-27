@@ -63,7 +63,7 @@ namespace Mediator.Tests
         private (TestMessageWriter, User) CreateTestUser(string name)
         {
             var writer = new TestMessageWriter();
-            var user = new User(writer, name);
+            var user = new User(name, writer);
             return (writer, user);
         }
 

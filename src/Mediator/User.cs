@@ -7,7 +7,7 @@ namespace Mediator
         private readonly IMessageWriter<ChatMessage> messageWriter;
         private IChatRoom chatRoom;
 
-        public User(IMessageWriter<ChatMessage> messageWriter, string name)
+        public User(string name, IMessageWriter<ChatMessage> messageWriter)
         {
             this.messageWriter = messageWriter ?? throw new ArgumentNullException(nameof(messageWriter));
             Name = name ?? throw new ArgumentNullException(nameof(name));

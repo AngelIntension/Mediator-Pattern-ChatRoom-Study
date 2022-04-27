@@ -12,7 +12,7 @@ namespace Mediator.Tests
             public void ShouldThrowArgumentNullExceptionGivenNullMessageWriter()
             {
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new User(null, "some name"));
+                var exception = Assert.Throws<ArgumentNullException>(() => new User("some name", null));
 
                 // assert
                 Assert.Equal("messageWriter", exception.ParamName);
@@ -25,7 +25,7 @@ namespace Mediator.Tests
                 var messageWriter = new Mock<IMessageWriter<ChatMessage>>();
 
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new User(messageWriter.Object, null));
+                var exception = Assert.Throws<ArgumentNullException>(() => new User(null, messageWriter.Object));
 
                 // assert
                 Assert.Equal("name", exception.ParamName);
@@ -44,7 +44,7 @@ namespace Mediator.Tests
 
                 var message = new ChatMessage(participantMock.Object, "some message");
 
-                var sut = new User(chatMessageWriterMock.Object, "User Name");
+                var sut = new User("User Name", chatMessageWriterMock.Object);
 
                 // act
                 sut.ReceiveMessage(message);
@@ -57,7 +57,7 @@ namespace Mediator.Tests
         public class Send : UserTest
         {
             [Fact]
-            public void ShouldSendMessageToUsersCurrentChatRoom()
+            public void ShouldSendMessageToUsersCurrentlyInChatRoom()
             {
                 // arrange
                 var messageWriter = new Mock<IMessageWriter<ChatMessage>>();
@@ -65,7 +65,7 @@ namespace Mediator.Tests
                 chatRoom.Setup(c => c.Send(It.IsAny<ChatMessage>()))
                     .Callback<ChatMessage>(message => Assert.Equal("test message", message.Content));
 
-                var sut = new User(messageWriter.Object, "some name");
+                var sut = new User("some name", messageWriter.Object);
                 sut.ChatRoomJoined(chatRoom.Object);
 
                 // act

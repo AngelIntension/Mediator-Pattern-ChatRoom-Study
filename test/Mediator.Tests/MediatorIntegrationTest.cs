@@ -14,7 +14,10 @@ namespace Mediator.Tests
             var (fletcherWriter, fletcher) = CreateConcreteColleague("Fletcher");
 
             var mediator = new Mediator(miller, orazio, fletcher);
-            var expectedOutput = "[Miller]: Hey everyone!\r\n[Orazio]: What's up Miller?\r\n[Fletcher]: Hey Miller!\r\n";
+            var expectedOutput =
+                "[Miller]: Hey everyone!\r\n" +
+                "[Orazio]: What's up Miller?\r\n" +
+                "[Fletcher]: Hey Miller!\r\n";
 
             // act
             mediator.Send(new Message(

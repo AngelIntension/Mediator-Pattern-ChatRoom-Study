@@ -15,10 +15,7 @@ namespace Mediator
 
         public void Send(Message message)
         {
-            foreach (var colleague in colleagues)
-            {
-                colleague.ReceiveMessage(message);
-            }
+            colleagues.ForEach(c => c.ReceiveMessage(message));
         }
     }
 }

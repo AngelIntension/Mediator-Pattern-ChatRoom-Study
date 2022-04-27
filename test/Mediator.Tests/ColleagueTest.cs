@@ -33,7 +33,7 @@ namespace Mediator.Tests
             }
         }
 
-        public class Receive : ColleagueTest
+        public class ReceiveMessage : ColleagueTest
         {
             [Fact]
             public void ShouldWriteReceivedMessage()

@@ -50,7 +50,6 @@ namespace Mediator.Tests
 
                 // act
                 sut.Join(participant1Mock.Object);
-                participant1Mock.Verify(p => p.ReceiveMessage(It.IsAny<ChatMessage>()), Times.Once());
                 sut.Join(participant2Mock.Object);
 
                 // assert
