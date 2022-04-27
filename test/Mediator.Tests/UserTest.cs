@@ -57,7 +57,7 @@ namespace Mediator.Tests
         public class Send : UserTest
         {
             [Fact]
-            public void ShouldSendMessageToUsersCurrentlyInChatRoom()
+            public void ShouldSendMessageToCurrentChatRoom()
             {
                 // arrange
                 var messageWriter = new Mock<IMessageWriter<ChatMessage>>();
