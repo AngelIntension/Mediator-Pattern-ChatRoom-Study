@@ -2,11 +2,11 @@
 
 namespace Mediator
 {
-    public class ConcreteColleague : IColleague
+    public class Colleague : IColleague
     {
         private readonly IMessageWriter<Message> messageWriter;
 
-        public ConcreteColleague(string name, IMessageWriter<Message> messageWriter)
+        public Colleague(string name, IMessageWriter<Message> messageWriter)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             this.messageWriter = messageWriter ?? throw new ArgumentNullException(nameof(messageWriter));

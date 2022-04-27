@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Mediator
 {
-    public class ConcreteMediator : IMediator
+    public class Mediator : IMediator
     {
         private readonly List<IColleague> colleagues;
 
-        public ConcreteMediator(params IColleague[] colleagues)
+        public Mediator(params IColleague[] colleagues)
         {
             if (colleagues == null) throw new ArgumentNullException(nameof(colleagues));
             this.colleagues = new List<IColleague>(colleagues);

@@ -1,54 +1,54 @@
-﻿using System.Text;
+﻿using Moq;
+using System;
 using Xunit;
 
 namespace Mediator.Tests
 {
     public class MediatorTest
     {
-        [Fact]
-        public void SendAMessageToAllColleagues()
+        public class Constructor : MediatorTest
         {
-            // arrange
-            var (millerWriter, miller) = CreateConcreteColleague("Miller");
-            var (orazioWriter, orazio) = CreateConcreteColleague("Orazio");
-            var (fletcherWriter, fletcher) = CreateConcreteColleague("Fletcher");
-
-            var mediator = new ConcreteMediator(miller, orazio, fletcher);
-            var expectedOutput = "[Miller]: Hey everyone!\r\n[Orazio]: What's up Miller?\r\n[Fletcher]: Hey Miller!\r\n";
-
-            // act
-            mediator.Send(new Message(
-                from: miller,
-                content: "Hey everyone!"
-            ));
-            mediator.Send(new Message(
-                from: orazio,
-                content: "What's up Miller?"
-            ));
-            mediator.Send(new Message(
-                from: fletcher,
-                content: "Hey Miller!"
-            ));
-
-            // assert
-            Assert.Equal(expectedOutput, millerWriter.Output.ToString());
-            Assert.Equal(expectedOutput, orazioWriter.Output.ToString());
-            Assert.Equal(expectedOutput, fletcherWriter.Output.ToString());
-        }
-
-        private (TestMessageWriter, ConcreteColleague) CreateConcreteColleague(string name)
-        {
-            var messageWriter = new TestMessageWriter();
-            var concreteColleague = new ConcreteColleague(name, messageWriter);
-            return (messageWriter, concreteColleague);
-        }
-
-        private class TestMessageWriter : IMessageWriter<Message>
-        {
-            public StringBuilder Output { get; } = new StringBuilder();
-            public void Write(Message message)
+            [Fact]
+            public void ShouldThrowArgumentNullExceptionGivenNullColleaguesArgument()
             {
-                Output.AppendLine($"[{message.Sender.Name}]: {message.Content}");
+                // act
+                var exception = Assert.Throws<ArgumentNullException>(() => new Mediator(null));
+
+                // assert
+                Assert.Equal("colleagues", exception.ParamName);
+            }
+        }
+
+        public class Send : MediatorTest
+        {
+            [Fact]
+            public void ShouldSendSpecifiedMessageToAllColleagues()
+            {
+                // arrange
+                var colleague1Mock = new Mock<IColleague>();
+                var colleague2Mock = new Mock<IColleague>();
+                var colleague3Mock = new Mock<IColleague>();
+
+                var colleagues = new IColleague[]
+                {
+                    colleague1Mock.Object,
+                    colleague2Mock.Object,
+                    colleague3Mock.Object,
+                };
+
+                var senderMock = new Mock<IColleague>();
+
+                var message = new Message(senderMock.Object, "test message");
+
+                var sut = new Mediator(colleagues);
+
+                // act
+                sut.Send(message);
+
+                // assert
+                colleague1Mock.Verify(c => c.ReceiveMessage(message));
+                colleague2Mock.Verify(c => c.ReceiveMessage(message));
+                colleague3Mock.Verify(c => c.ReceiveMessage(message));
             }
         }
     }

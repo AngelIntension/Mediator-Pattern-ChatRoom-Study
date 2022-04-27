@@ -4,9 +4,9 @@ using Xunit;
 
 namespace Mediator.Tests
 {
-    public class ConcreteColleagueTest
+    public class ColleagueTest
     {
-        public class Constructor : ConcreteColleagueTest
+        public class Constructor : ColleagueTest
         {
             [Fact]
             public void ShouldThrowArgumentNullExceptionGivenNullName()
@@ -15,7 +15,7 @@ namespace Mediator.Tests
                 var messageWriterMock = new Mock<IMessageWriter<Message>>();
 
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new ConcreteColleague(null, messageWriterMock.Object));
+                var exception = Assert.Throws<ArgumentNullException>(() => new Colleague(null, messageWriterMock.Object));
 
                 // assert
                 Assert.Equal("name", exception.ParamName);
@@ -26,14 +26,14 @@ namespace Mediator.Tests
             public void ShouldThrowArgumentNullExceptionGivenNullMessageWriter()
             {
                 // act
-                var exception = Assert.Throws<ArgumentNullException>(() => new ConcreteColleague("Message Writer", null));
+                var exception = Assert.Throws<ArgumentNullException>(() => new Colleague("Message Writer", null));
 
                 // assert
                 Assert.Equal("messageWriter", exception.ParamName);
             }
         }
 
-        public class Receive : ConcreteColleagueTest
+        public class Receive : ColleagueTest
         {
             [Fact]
             public void ShouldWriteReceivedMessage()
@@ -45,7 +45,7 @@ namespace Mediator.Tests
 
                 var message = new Message(sender.Object, "some content");
 
-                var sut = new ConcreteColleague("Concrete Colleague", messageWriterMock.Object);
+                var sut = new Colleague("Concrete Colleague", messageWriterMock.Object);
 
                 // act
                 sut.ReceiveMessage(message);
